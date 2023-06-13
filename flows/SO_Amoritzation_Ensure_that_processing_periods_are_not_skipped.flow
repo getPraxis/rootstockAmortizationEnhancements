@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Error_Incorrect_first_period</name>
+        <label>Error: Incorrect first period</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <actionName>FlowCustomError</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <elementReference>fxIncorrectStartPeriodError</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Error_Incorrect_Next_period</name>
+        <label>Error: Incorrect Next period</label>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
+        <actionName>FlowCustomError</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <elementReference>fxErrorIncorrectNextPeriod</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Is the new &apos;last period processed&apos; exactly one month after the previous value (to ensure we haven&apos;t skipped periods)</description>
+        <name>Are_we_amortizing_the_correct_next_period</name>
+        <label>Are we amortizing the correct next period</label>
+        <locationX>314</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Correct Next Period</defaultConnectorLabel>
+        <rules>
+            <name>Incorrect_Correct_First_Period</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.rstk__soamort_lastmonth__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.rstk__soamort_lastyear__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.rstk__soamort_lastmonth__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.rstk__soamort_startmonth__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.rstk__soamort_lastyear__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.rstk__soamort_startyear__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Incorrect_first_period</targetReference>
+            </connector>
+            <label>Incorrect Correct First Period</label>
+        </rules>
+        <rules>
+            <name>Incorrect_next_period</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.rstk__soamort_lastmonth__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>fxCorrectNextMonth</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.rstk__soamort_lastyear__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>fxCorrectNextYear</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Incorrect_Next_period</targetReference>
+            </connector>
+            <label>Incorrect next period</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>fxCorrectNextMonth</name>
+        <dataType>Number</dataType>
+        <expression>IF({!$Record__Prior.rstk__soamort_lastmonth__c}=12, 1, IF(ISBLANK({!$Record__Prior.rstk__soamort_lastmonth__c}), {!$Record.rstk__soamort_startmonth__c}, {!$Record__Prior.rstk__soamort_lastmonth__c}+1))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>fxCorrectNextYear</name>
+        <dataType>Number</dataType>
+        <expression>IF({!$Record__Prior.rstk__soamort_lastmonth__c}=12, {!$Record__Prior.rstk__soamort_lastyear__c}+1, IF(ISBLANK({!$Record__Prior.rstk__soamort_lastmonth__c}), {!$Record.rstk__soamort_startyear__c}, {!$Record__Prior.rstk__soamort_lastyear__c}))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>fxErrorIncorrectNextPeriod</name>
+        <dataType>String</dataType>
+        <expression>&quot;Amortization schedule &quot;&amp;{!$Record.Name}&amp;&quot; was last processed on &quot;&amp;TEXT({!$Record__Prior.rstk__soamort_lastmonth__c})&amp;&quot;/&quot;&amp;TEXT({!$Record__Prior.rstk__soamort_lastyear__c})&amp;&quot;. You must process period &quot;&amp;TEXT({!fxCorrectNextMonth})&amp;&quot;/&quot;&amp;TEXT({!fxCorrectNextYear})&amp;&quot; first.&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>fxIncorrectStartPeriodError</name>
+        <dataType>String</dataType>
+        <expression>&quot;Amortization schedule &quot;&amp;{!$Record.Name}&amp;&quot; is supposed to start on &quot;&amp;TEXT({!$Record.rstk__soamort_startmonth__c})&amp;&quot;/&quot;&amp;TEXT({!$Record.rstk__soamort_startyear__c})&amp;&quot; which is not the current period you are processing. Please process the above period first.&quot;</expression>
+    </formulas>
+    <interviewLabel>SO Amoritzation: Ensure that processing periods are not skipped {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SO Amoritzation: Ensure that processing periods are not skipped</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Are_we_amortizing_the_correct_next_period</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>rstk__soamort_lastperiod__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>rstk__soamort_lastmonth__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>rstk__soamort_lastyear__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>rstk__soamort__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

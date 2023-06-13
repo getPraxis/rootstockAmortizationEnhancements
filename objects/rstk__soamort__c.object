@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Monthly_Schedules_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When this checkbox is checked it indicates that monthly schedule details have been created</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When this checkbox is checked it indicates that monthly schedule details have been created</inlineHelpText>
+        <label>Monthly Schedules Created</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Months_should_have_run__c</fullName>
+        <description>How many months elapsed between the start period and today</description>
+        <externalId>false</externalId>
+        <formula>IF(YEAR(TODAY()) = rstk__soamort_startyear__c,
+  MONTH(TODAY())+1- rstk__soamort_startmonth__c ,
+  ((YEAR(TODAY())-1- rstk__soamort_startyear__c)*12)+12-rstk__soamort_startmonth__c+MONTH(TODAY())
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>How many months elapsed between the start period and today</inlineHelpText>
+        <label>Months should have run</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Amortization_Transactions__c</fullName>
+        <description>A roll-up summary of all amortization transactions</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A roll-up summary of all amortization transactions</inlineHelpText>
+        <label>Number of Amortization Transactions</label>
+        <summaryForeignKey>rstk__soamorttxn__c.rstk__soamorttxn_soamort__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+</CustomObject>
