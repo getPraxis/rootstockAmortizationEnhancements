@@ -33,6 +33,10 @@
         <name>PermissionSet</name>
     </types>
     <types>
+        <members>AmortizationReports</members>
+        <name>ReportFolder</name>
+    </types>
+    <types>
         <members>AmortizationReports/Amortization_Schedules_by_Month_lTI</members>
         <name>Report</name>
     </types>
