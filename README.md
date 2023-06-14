@@ -18,3 +18,5 @@ After deploying this solution, please take the following steps:
 <a href="https://githubsfdeploy.herokuapp.com?owner=getPraxis&amp;repo=rootstockAmortizationEnhancements">
   <img src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png" alt="Deploy to Salesforce" />
 </a>
+
+https://screencast.getpraxis.com/recordings/bvaOG1XNSMDLov0sqoUo
