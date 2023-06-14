@@ -19,4 +19,5 @@ After deploying this solution, please take the following steps:
   <img src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png" alt="Deploy to Salesforce" />
 </a>
 
-[![How to install Amortization Enhacements](../media/Enhancements to Rootstock Amortization.png?raw=true "image_tooltip")]([https://www.youtube.com/watch?v=MxYGvmB1jBc](https://screencast.getpraxis.com/recordings/bvaOG1XNSMDLov0sqoUo))
+How to Install the Amortization Enhancements
+[![How to install Amortization Enhacements](../media/Enhancements%20to%20Rootstock%20Amortization.png?raw=true "image_tooltip")](https://screencast.getpraxis.com/recordings/bvaOG1XNSMDLov0sqoUo)
