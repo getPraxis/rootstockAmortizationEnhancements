@@ -26,24 +26,43 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
+        <field>rstk__soamort__c$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>rstk__soamort__c$CreatedBy</field>
+    </columns>
+    <columns>
+        <field>rstk__soamort__c$LastModifiedDate</field>
+    </columns>
+    <columns>
+        <field>rstk__soamort__c$LastModifiedBy</field>
+    </columns>
+    <columns>
+        <field>rstk__soamort__c$LastActivityDate</field>
+    </columns>
+    <columns>
+        <field>rstk__soamort__c$rstk__soamort_salesamtrmng__c</field>
+    </columns>
+    <columns>
+        <field>rstk__soamort__c$rstk__soamort_shipdate__c</field>
+    </columns>
+    <columns>
+        <field>rstk__soamort__c$rstk__soamort_socontract__c</field>
+    </columns>
+    <columns>
         <aggregateTypes>Sum</aggregateTypes>
         <field>rstk__soamort__c.Amortization_Schedules_by_Month__r$Revenue_Amortization_Amount__c</field>
     </columns>
-    <format>Matrix</format>
-    <groupingsAcross>
-        <dateGranularity>Day</dateGranularity>
-        <field>rstk__soamort__c.Amortization_Schedules_by_Month__r$Schedule_Month_Year__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsAcross>
+    <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>rstk__soamort__c$rstk__soamort_defsalesacct__c</field>
+        <field>rstk__soamort__c.Amortization_Schedules_by_Month__r$Schedule_Month_Year__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Amortization Schedules by Month</name>
     <params>
         <name>co</name>
-        <value>0</value>
+        <value>1</value>
     </params>
     <reportType>Amortization_Schedules_with_Monthly_Details__c</reportType>
     <scope>organization</scope>
