@@ -177,11 +177,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>rstk__soamort__c.rstk__soamort_negative__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>rstk__soamort__c.rstk__soamort_qty__c</field>
         <readable>true</readable>
     </fieldPermissions>
