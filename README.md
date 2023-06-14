@@ -12,6 +12,7 @@ After deploying this solution, please take the following steps:
    - Amortization Schedule: Create Monthly Schedules
    - SO Amortization: Ensure that processing periods are not skipped
 2. Assign the permission set 'Amortization Monthly Schedules' to any user that needs to be able to see the monthly schedules.
+3. Add the 'Amortization Schedule by Month' related list to the Amortization Schedule Page Layout
 
  
 <a href="https://githubsfdeploy.herokuapp.com?owner=getPraxis&amp;repo=rootstockAmortizationEnhancements">
